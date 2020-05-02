@@ -25,7 +25,7 @@ public class Controller implements Initializable {
     @FXML
     private ComboBox<String> selectProtocol = new ComboBox<>();
     @FXML
-    private TableView<Package> packetTable = new TableView<>();
+    private TableView<Packet> packetTable = new TableView<>();
     @FXML
     private TableColumn<Packet,Integer> No_col = new TableColumn<>();
     @FXML
@@ -44,8 +44,19 @@ public class Controller implements Initializable {
 
     public static ObservableList<Packet> packets = FXCollections.observableArrayList();
 
+    public void initPacketTable(){
+        packetTable.prefWidthProperty().bind(container.widthProperty());
+        No_col.prefWidthProperty().bind(packetTable.widthProperty().divide(9.0));
+        time_col.prefWidthProperty().bind(packetTable.widthProperty().divide(9.0));
+        source_col.prefWidthProperty().bind(packetTable.widthProperty().divide(9.0));
+        target_col.prefWidthProperty().bind(packetTable.widthProperty().divide(9.0));
+        protocol_col.prefWidthProperty().bind(packetTable.widthProperty().divide(9.0));
+        length_col.prefWidthProperty().bind(packetTable.widthProperty().divide(9.0));
+        info_col.prefWidthProperty().bind(packetTable.widthProperty().divide(3.0));
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        initPacketTable();
     }
 }
