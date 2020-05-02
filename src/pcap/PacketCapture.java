@@ -1,0 +1,57 @@
+package pcap;
+
+import jpcap.JpcapCaptor;
+import jpcap.NetworkInterface;
+import jpcap.packet.Packet;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class PacketCapture implements Runnable {
+
+    NetworkInterface device;
+
+    static String Filter = "";
+    static ArrayList<Packet> packets = new ArrayList<>();
+
+    public void setDevice(NetworkInterface device) {
+        this.device = device;
+    }
+
+    public void bindTable(){
+
+    }
+
+    public static void setFilter(String filter) {
+        Filter = filter;
+    }
+
+    public static void clearPackets(){
+        packets.clear();
+    }
+
+    public static void DrawTable(){
+
+    }
+
+    @Override
+    public void run() {
+        Packet packet;
+        try {
+            JpcapCaptor captor = JpcapCaptor.openDevice(device,65535,true,20);
+            while (true){
+                long startTime = System.currentTimeMillis();
+                while (startTime+600>=System.currentTimeMillis()){
+                    packet = captor.getPacket();
+                    if (packet!=null){
+                        packets.add(packet);
+                        DrawTable();
+                    }
+                }
+                Thread.sleep(1000);
+            }
+        }catch (IOException | InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+}

@@ -1,8 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.GridPane?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<GridPane fx:controller="sample.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+
+<StackPane fx:id="container" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <children>
+        <TabPane prefHeight="650.0" prefWidth="860.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="主界面">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <VBox>
+                     <children>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label text="选择网卡" />
+                                    <ComboBox prefWidth="150.0" fx:id="selectNetworkCard" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Label text="选择协议" />
+                                    <ComboBox prefWidth="150.0" fx:id="selectProtocol" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </GridPane>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="packetTable" prefHeight="100.0" prefWidth="861.0">
+                                <columns>
+                                  <TableColumn fx:id="No_col" prefWidth="75.0" text="序号" />
+                                  <TableColumn fx:id="time_col" prefWidth="75.0" text="时间" />
+                                    <TableColumn fx:id="source_col" prefWidth="75.0" text="源IP" />
+                                    <TableColumn fx:id="target_col" prefWidth="75.0" text="目的IP" />
+                                    <TableColumn fx:id="protocol_col" prefWidth="75.0" text="协议" />
+                                    <TableColumn fx:id="length_col" prefWidth="75.0" text="长度" />
+                                    <TableColumn fx:id="info_col" prefWidth="120.0" text="详情" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </HBox>
+                     </children></VBox>
+                    </content>
+                </Tab>
+
+            </tabs>
+        </TabPane>
+    </children>
+
+</StackPane>

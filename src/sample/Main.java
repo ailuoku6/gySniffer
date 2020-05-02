@@ -20,8 +20,8 @@ public class Main extends Application {
 //        System.out.println(r==Pcap.NOT_OK);
 //        System.out.println(alldevs.size());
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setTitle("GY网络嗅探器");
+        primaryStage.setScene(new Scene(root, 1360, 650));
         primaryStage.show();
     }
 
