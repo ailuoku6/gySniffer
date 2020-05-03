@@ -29,7 +29,7 @@ public class PacketFactory {
             info.setSourceIp(ipPacket.src_ip.toString());
             info.setTargetIp(ipPacket.dst_ip.toString());
             info.setLength((int) ipPacket.length);
-            info.setInfo("待填充");
+            info.setInfo(ipPacket.toString());
             info.setPacket(packet);
         }
         return info;
@@ -45,7 +45,7 @@ public class PacketFactory {
             info.setSourceIp(icmpPacket.src_ip.toString());
             info.setTargetIp(icmpPacket.dst_ip.toString());
             info.setLength((int) icmpPacket.length);
-            info.setInfo("待填充");
+            info.setInfo(icmpPacket.toString());
             info.setPacket(packet);
         }
         return info;
@@ -61,7 +61,7 @@ public class PacketFactory {
             info.setSourceIp(tcpPacket.src_ip.toString());
             info.setTargetIp(tcpPacket.dst_ip.toString());
             info.setLength((int) tcpPacket.length);
-            info.setInfo("待填充");
+            info.setInfo(tcpPacket.toString());
             info.setPacket(packet);
 
             System.out.println(tcpPacket.data);
@@ -85,7 +85,7 @@ public class PacketFactory {
             info.setSourceIp(udpPacket.src_ip.toString());
             info.setTargetIp(udpPacket.dst_ip.toString());
             info.setLength(udpPacket.length);
-            info.setInfo("待填充");
+            info.setInfo(udpPacket.toString());
             info.setPacket(packet);
         }
         return info;
