@@ -144,10 +144,10 @@ public class Controller implements Initializable {
     }
 
     public void filldata(){
-        for (int i = 0;i<10;i++){
-            PacketInfo info = new PacketInfo(i+1,String.valueOf(i),String.valueOf(i+100),String.valueOf(i+200),"udp",191,"detail");
-            packets.add(info);
-        }
+//        for (int i = 0;i<10;i++){
+//            PacketInfo info = new PacketInfo(i+1,String.valueOf(i),String.valueOf(i+100),String.valueOf(i+200),"udp",191,"detail");
+//            packets.add(info);
+//        }
         networkCards.clear();
         NetworkInterface[] networkInterfaces = NetCard.getDevices();
         for (NetworkInterface networkInterface:
