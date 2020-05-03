@@ -9,10 +9,25 @@ import java.util.ArrayList;
 
 public class PacketCapture implements Runnable {
 
-    NetworkInterface device;
+    private volatile static PacketCapture instance = null;
 
-    static String Filter = "";
-    static ArrayList<Packet> packets = new ArrayList<>();
+    private NetworkInterface device;
+
+    private String Filter = "";
+    private ArrayList<Packet> packets = new ArrayList<>();
+
+    private PacketCapture(){}
+
+    public static PacketCapture getInstance(){
+        if (instance==null){
+            synchronized (PacketCapture.class){
+                if (instance==null){
+                    instance = new PacketCapture();
+                }
+            }
+        }
+        return instance;
+    }
 
     public void setDevice(NetworkInterface device) {
         this.device = device;
@@ -22,15 +37,15 @@ public class PacketCapture implements Runnable {
 
     }
 
-    public static void setFilter(String filter) {
+    public void setFilter(String filter) {
         Filter = filter;
     }
 
-    public static void clearPackets(){
+    public void clearPackets(){
         packets.clear();
     }
 
-    public static void DrawTable(){
+    public void DrawTable(){
 
     }
 
