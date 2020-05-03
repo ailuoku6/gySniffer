@@ -63,6 +63,14 @@ public class PacketFactory {
             info.setLength((int) tcpPacket.length);
             info.setInfo("待填充");
             info.setPacket(packet);
+
+            System.out.println(tcpPacket.data);
+            System.out.println(tcpPacket.ack);
+            System.out.println(tcpPacket.ack_num);
+            System.out.println(tcpPacket.caplen);
+            System.out.println(tcpPacket.dst_port);
+            System.out.println(tcpPacket.src_port);
+            System.out.println(tcpPacket.toString());
         }
         return info;
     }
