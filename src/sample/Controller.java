@@ -184,7 +184,7 @@ public class Controller implements Initializable {
             public void changed(ObservableValue<? extends NetworkInterface> observable, NetworkInterface oldValue, NetworkInterface newValue) {
                 scanning.set(false);
                 //如果不是选择空
-                //capture.setDevice();
+                capture.setDevice(newValue);
             }
         });
 
@@ -207,7 +207,10 @@ public class Controller implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 //如果没选中网卡，则不给开始
-
+                if (!scanning.get()&&selectNetworkCard.getSelectionModel().getSelectedItem()==null){
+                    return;
+                }
+                scanning.set(!scanning.get());
             }
         });
 
@@ -218,6 +221,7 @@ public class Controller implements Initializable {
                     if (newValue){
                         start_stop.setText("停止");
                         scaningThread.start();
+                        System.out.println("扫描进程开始");
                     }else {
                         start_stop.setText("开始");
                         scaningThread.stop();
