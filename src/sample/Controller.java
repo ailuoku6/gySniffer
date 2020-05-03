@@ -2,6 +2,10 @@ package sample;
 
 import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import entity.PacketInfo;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableBooleanValue;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +18,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
+import jpcap.NetworkInterface;
 import jpcap.packet.Packet;
+import pcap.NetCard;
 import pcap.PacketCapture;
 
 import java.net.URL;
@@ -26,10 +32,18 @@ public class Controller implements Initializable {
 
     private PacketCapture capture;
 
+    //private ObservableValue<Boolean> scanning =
+    private SimpleBooleanProperty scanning = new SimpleBooleanProperty(false);
+
+    private Thread scaningThread = null;
+
+
     @FXML
     private StackPane container;
     @FXML
-    private ComboBox<String> selectNetworkCard = new ComboBox<>();
+    private ComboBox<NetworkInterface> selectNetworkCard = new ComboBox<>();
+    @FXML
+    private Button start_stop;
     @FXML
     private ComboBox<String> selectProtocol = new ComboBox<>();
     @FXML
@@ -55,6 +69,17 @@ public class Controller implements Initializable {
 
 
     public static ObservableList<PacketInfo> packets = FXCollections.observableArrayList();
+
+    private final ObservableList<String> protocols = FXCollections.observableArrayList(
+            "",
+            "IP",
+            "ICMP",
+            "TCP",
+            "UDP"
+    );
+
+    private ObservableList<NetworkInterface> networkCards = FXCollections.observableArrayList();
+
 
     public void initPacketTable(){
         packetTable.prefWidthProperty().bind(container.widthProperty());
@@ -123,29 +148,99 @@ public class Controller implements Initializable {
             PacketInfo info = new PacketInfo(i+1,String.valueOf(i),String.valueOf(i+100),String.valueOf(i+200),"udp",191,"detail");
             packets.add(info);
         }
+        networkCards.clear();
+        NetworkInterface[] networkInterfaces = NetCard.getDevices();
+        for (NetworkInterface networkInterface:
+             networkInterfaces) {
+            networkCards.add(networkInterface);
+        }
     }
 
     public void initCapture(){
         capture = PacketCapture.getInstance();
+        bindData2Capture();
+        //对配置改变产生响应
+
+        scaningThread = new Thread(capture);
 
     }
 
     public void initConfigure(){
         //初始化头部几个配置
+        selectProtocol.setItems(protocols);
+//        selectNetworkCard.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+//            @Override
+//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//                scanning.set(false);
+//                //如果不是选择空
+//                //capture.setDevice();
+//            }
+//        });
+
+        selectNetworkCard.setItems(networkCards);
+
+        selectNetworkCard.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<NetworkInterface>() {
+            @Override
+            public void changed(ObservableValue<? extends NetworkInterface> observable, NetworkInterface oldValue, NetworkInterface newValue) {
+                scanning.set(false);
+                //如果不是选择空
+                //capture.setDevice();
+            }
+        });
+
+        selectProtocol.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                capture.setProtocolType(newValue);
+            }
+        });
         filterAction.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 //过滤
+                String filterStr = filterMask.getText();
+                capture.setFilter(filterStr);
             }
         });
+
+        start_stop.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //如果没选中网卡，则不给开始
+
+            }
+        });
+
+        scanning.addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (scaningThread!=null){
+                    if (newValue){
+                        start_stop.setText("停止");
+                        scaningThread.start();
+                    }else {
+                        start_stop.setText("开始");
+                        scaningThread.stop();
+                    }
+                }
+            }
+        });
+    }
+
+    public void bindData2Capture(){
+        if (capture!=null){
+            capture.bindTable(packets);
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initPacketTable();
         filldata();
-        initCapture();
         initConfigure();
+        initCapture();
+
+        //bindData2Capture();
     }
 }
 

@@ -32,6 +32,7 @@
                                  <children>
                                     <Label text="选择网卡" />
                                     <ComboBox fx:id="selectNetworkCard" prefWidth="150.0" />
+                                    <Button mnemonicParsing="false" text="开始" fx:id="start_stop" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
