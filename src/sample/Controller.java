@@ -161,7 +161,7 @@ public class Controller implements Initializable {
         bindData2Capture();
         //对配置改变产生响应
 
-        scaningThread = new Thread(capture);
+        //scaningThread = new Thread(capture);
 
     }
 
@@ -217,15 +217,19 @@ public class Controller implements Initializable {
         scanning.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (scaningThread!=null){
-                    if (newValue){
-                        start_stop.setText("停止");
-                        scaningThread.start();
-                        System.out.println("扫描进程开始");
-                    }else {
-                        start_stop.setText("开始");
-                        scaningThread.stop();
+//                if (scaningThread!=null){
+//
+//                }
+                if (newValue){
+                    start_stop.setText("停止");
+                    if (scaningThread==null||!scaningThread.isAlive()){
+                        scaningThread = new Thread(capture);
                     }
+                    scaningThread.start();
+                    System.out.println("扫描进程开始");
+                }else {
+                    start_stop.setText("开始");
+                    capture.setRun(false);
                 }
             }
         });

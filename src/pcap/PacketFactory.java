@@ -65,6 +65,7 @@ public class PacketFactory {
             info.setPacket(packet);
 
             System.out.println(tcpPacket.data);
+
             System.out.println(tcpPacket.ack);
             System.out.println(tcpPacket.ack_num);
             System.out.println(tcpPacket.caplen);

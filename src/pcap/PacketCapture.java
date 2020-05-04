@@ -22,6 +22,14 @@ public class PacketCapture implements Runnable {
 
     private String[] protocolList = {"ICMP","UDP","TCP","IP"};
 
+    //private JpcapCaptor captor;
+
+    private volatile boolean isRun = true;
+
+//    private final Object lock = new Object();
+//
+//    private boolean pause = false;
+
     private PacketCapture(){}
 
     public static PacketCapture getInstance(){
@@ -37,7 +45,34 @@ public class PacketCapture implements Runnable {
 
     public void setDevice(NetworkInterface device) {
         this.device = device;
+        //captor.close();
     }
+
+    public void setRun(boolean run) {
+        isRun = run;
+    }
+
+    //
+//    public void pauseThread(){
+//        this.pause = true;
+//    }
+//
+//    public void resumeThread(){
+//        this.pause = false;
+//        synchronized (lock){
+//            lock.notify();
+//        }
+//    }
+//
+//    void onPause(){
+//        synchronized (lock){
+//            try {
+//                lock.wait();
+//            }catch (InterruptedException e){
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     public void bindTable(ObservableList<PacketInfo> packetInfos){
         this.packetInfos = packetInfos;
@@ -109,7 +144,7 @@ public class PacketCapture implements Runnable {
         Packet packet;
         try {
             JpcapCaptor captor = JpcapCaptor.openDevice(device,65535,true,20);
-            while (true){
+            while (isRun){
                 long startTime = System.currentTimeMillis();
                 while (startTime+600>=System.currentTimeMillis()){
                     packet = captor.getPacket();
