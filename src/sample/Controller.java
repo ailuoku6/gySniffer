@@ -75,7 +75,8 @@ public class Controller implements Initializable {
             "IP",
             "ICMP",
             "TCP",
-            "UDP"
+            "UDP",
+            "ARP"
     );
 
     private ObservableList<NetworkInterface> networkCards = FXCollections.observableArrayList();

@@ -3,6 +3,8 @@ package pcap;
 import entity.PacketInfo;
 import jpcap.packet.*;
 
+import javax.xml.bind.DatatypeConverter;
+
 public class PacketFactory {
     public static PacketInfo packet2Info(Packet packet,Integer no){
         PacketInfo info = null;
@@ -14,6 +16,8 @@ public class PacketFactory {
             info = TCPanalyze(packet);
         }else if (packet.getClass().equals(UDPPacket.class)){
             info = UDPanalyze(packet);
+        }else if (packet.getClass().equals(ARPPacket.class)){
+            info = ARPanalyze(packet);
         }
         if (info!=null) info.setNo(no);
         return info==null?new PacketInfo():info;
@@ -31,6 +35,8 @@ public class PacketFactory {
             info.setLength((int) ipPacket.length);
             info.setInfo(ipPacket.toString());
             info.setPacket(packet);
+
+            System.out.println(ipPacket.header);
         }
         return info;
     }
@@ -47,6 +53,8 @@ public class PacketFactory {
             info.setLength((int) icmpPacket.length);
             info.setInfo(icmpPacket.toString());
             info.setPacket(packet);
+
+            System.out.println(icmpPacket.header);
         }
         return info;
     }
@@ -64,7 +72,7 @@ public class PacketFactory {
             info.setInfo(tcpPacket.toString());
             info.setPacket(packet);
 
-            System.out.println(tcpPacket.data);
+            System.out.println(tcpPacket.header);
 
             System.out.println(tcpPacket.ack);
             System.out.println(tcpPacket.ack_num);
@@ -87,6 +95,24 @@ public class PacketFactory {
             info.setTargetIp(udpPacket.dst_ip.toString());
             info.setLength(udpPacket.length);
             info.setInfo(udpPacket.toString());
+            info.setPacket(packet);
+
+            System.out.println(DatatypeConverter.printHexBinary(udpPacket.header));
+        }
+        return info;
+    }
+
+    public static PacketInfo ARPanalyze(Packet packet){
+        PacketInfo info = null;
+        if (packet instanceof ARPPacket){
+            info = new PacketInfo();
+            ARPPacket arpPacket = (ARPPacket) packet;
+            info.setProtocol("ARP");
+            info.setTime(String.valueOf(arpPacket.sec));
+            info.setSourceIp(DatatypeConverter.printHexBinary(arpPacket.sender_hardaddr));
+            info.setTargetIp(DatatypeConverter.printHexBinary(arpPacket.target_hardaddr));
+            info.setLength(arpPacket.len);
+            info.setInfo(arpPacket.toString());
             info.setPacket(packet);
         }
         return info;
