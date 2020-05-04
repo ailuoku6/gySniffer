@@ -223,6 +223,7 @@ public class Controller implements Initializable {
                 if (newValue){
                     start_stop.setText("停止");
                     if (scaningThread==null||!scaningThread.isAlive()){
+                        capture.setRun(true);
                         scaningThread = new Thread(capture);
                     }
                     scaningThread.start();

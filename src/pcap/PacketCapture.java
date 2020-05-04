@@ -97,23 +97,27 @@ public class PacketCapture implements Runnable {
         if (packetInfos!=null){
             packetInfos.clear();
             for (Packet p: packets) {
-                if (isFilter(p)){
-                    packetInfos.add(PacketFactory.packet2Info(p,packetInfos.size()+1));
+                PacketInfo info = null;
+                if ((info = isFilter(p))!=null){
+                    info.setNo(packetInfos.size()+1);
+                    packetInfos.add(info);
                 }
             }
         }
     }
 
     public void addItem2Table(Packet packet){
-        if (packetInfos!=null&&isFilter(packet)){
-            packetInfos.add(PacketFactory.packet2Info(packet,packetInfos.size()+1));
+        PacketInfo info = null;
+        if (packetInfos!=null&&(info = isFilter(packet))!=null){
+            info.setNo(packetInfos.size()+1);
+            packetInfos.add(info);
         }
     }
 
-    private boolean isFilter(Packet packet){//返回true表示满足过滤条件
+    private PacketInfo isFilter(Packet packet){//返回true表示满足过滤条件
         boolean flag = true;
         PacketInfo info = PacketFactory.packet2Info(packet,0);
-        if (info==null) return false;
+        if (info==null) return null;
         if (!("".equals(protocolType))){
             if (!(info.getProtocol().contains(protocolType))) flag = false;
         }
@@ -135,7 +139,7 @@ public class PacketCapture implements Runnable {
                 }
             }
         }
-        return flag;
+        return flag?info:null;
     }
 
 
