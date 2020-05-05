@@ -81,8 +81,8 @@ public class Controller implements Initializable {
             "IP",
             "ICMP",
             "TCP",
-            "UDP",
-            "ARP"
+            "UDP"
+//            "ARP"
     );
 
     private ObservableList<NetworkInterface> networkCards = FXCollections.observableArrayList();
@@ -143,11 +143,38 @@ public class Controller implements Initializable {
 //                        choosedIndex=TableRowControl.this.getIndex();//获取点击的index，就是表上的第几项
 
                         //System.out.println(TableRowControl.this.getIndex());
-                        Packet p = packetTable.getItems().get(TableRowControl.this.getIndex()).getPacket();
+                        int index = TableRowControl.this.getIndex();
+                        PacketInfo info = packetTable.getItems().get(index);
+                        Packet p = info.getPacket();
 
                         Map<String,Object> m =  PacketFactory.getPacketDetail(p);
                         for(String key : m.keySet()){
                             System.out.println(m.get(key));
+                        }
+
+                        box.getChildren().clear();
+                        TreeItem<String> frameRoot = new TreeItem<>("frame "+index+" : "+p.header.length +" bytes on wire");
+                        TreeItem<String> interfaceName = new TreeItem<>("Interface Name :"+info.getInterfaceName());
+                        frameRoot.getChildren().add(interfaceName);
+                        box.getChildren().add(new TreeView<String>(frameRoot));
+
+                        for (String key : m.keySet()){
+                            TreeItem<String> croot = null;
+                            Object value = m.get(key);
+                            if (value instanceof Map){
+                                croot = new TreeItem<>(key);
+                                Map<String,String> m1 = (Map<String,String>) value;
+                                for (String key1 : m1.keySet()){
+                                    TreeItem<String> treeItem = new TreeItem<>(key1+": "+m1.get(key1));
+                                    croot.getChildren().add(treeItem);
+                                }
+                            }else if (value.getClass().equals(String.class)){
+                                croot = new TreeItem<>(key+": "+value);
+                            }
+                            if (croot!=null){
+                                box.getChildren().add(new TreeView<String>(croot));
+                            }
+
                         }
 
                     }

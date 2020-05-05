@@ -11,6 +11,7 @@ public class PacketInfo {
     private Integer length;
     private String info;
     private Packet packet;
+    private String interfaceName;
 
     public PacketInfo(Integer no, String time, String sourceIp, String targetIp, String protocol, Integer length, String info,Packet packet) {
         this.no = no;
@@ -98,5 +99,13 @@ public class PacketInfo {
 
     public void setPacket(Packet packet) {
         this.packet = packet;
+    }
+
+    public String getInterfaceName() {
+        return interfaceName;
+    }
+
+    public void setInterfaceName(String interfaceName) {
+        this.interfaceName = interfaceName;
     }
 }
