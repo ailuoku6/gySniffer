@@ -2,6 +2,7 @@ package sample;
 
 import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import entity.PacketInfo;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableBooleanValue;
@@ -297,5 +298,8 @@ public class Controller implements Initializable {
 
         //bindData2Capture();
     }
+
+
+
 }
 
