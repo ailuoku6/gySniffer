@@ -20,7 +20,7 @@ public class PacketCapture implements Runnable {
     private ArrayList<Packet> packets = new ArrayList<>();
     private ObservableList<PacketInfo> packetInfos = null;
 
-    private String[] protocolList = {"ICMP","UDP","TCP","IP","ARP"};
+    private String[] protocolList = {"ICMP","UDP","TCP","IP"};
 
     //private JpcapCaptor captor;
 

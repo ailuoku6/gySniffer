@@ -19,11 +19,12 @@ public class PacketFactory {
             info = TCPanalyze(packet);
         }else if (packet.getClass().equals(UDPPacket.class)){
             info = UDPanalyze(packet);
-        }else if (packet.getClass().equals(ARPPacket.class)){
-            info = ARPanalyze(packet);
         }else if (packet.getClass().equals(IPPacket.class)){
             info = IPanalyze(packet);
         }
+//        else if (packet.getClass().equals(ARPPacket.class)){
+//            info = ARPanalyze(packet);
+//        }
         if (info!=null) info.setNo(no);
         return info==null?new PacketInfo():info;
     }
