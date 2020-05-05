@@ -143,12 +143,22 @@ public class Controller implements Initializable {
 //                        choosedIndex=TableRowControl.this.getIndex();//获取点击的index，就是表上的第几项
 
                         //System.out.println(TableRowControl.this.getIndex());
-                        Packet p = packetTable.getItems().get(TableRowControl.this.getIndex()).getPacket();
+                        int index = TableRowControl.this.getIndex();
+                        PacketInfo info = packetTable.getItems().get(index);
+                        Packet p = info.getPacket();
 
                         Map<String,Object> m =  PacketFactory.getPacketDetail(p);
                         for(String key : m.keySet()){
                             System.out.println(m.get(key));
                         }
+
+                        box.getChildren().clear();
+                        TreeItem<String> frameRoot = new TreeItem<>("frame "+index+" : "+p.header.length +" bytes on wire");
+                        TreeItem<String> interfaceName = new TreeItem<>("Interface Name :"+info.getInterfaceName());
+                        frameRoot.getChildren().add(interfaceName);
+                        box.getChildren().add(new TreeView<String>(frameRoot));
+
+
 
                     }
                 }

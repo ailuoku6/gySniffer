@@ -139,6 +139,11 @@ public class PacketCapture implements Runnable {
                 }
             }
         }
+
+        if (info!=null){
+            info.setInterfaceName(device.name);
+        }
+
         return flag?info:null;
     }
 
