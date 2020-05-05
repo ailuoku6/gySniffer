@@ -207,7 +207,7 @@ public class PacketFactory {
 
             map.put("InternetnProtocol Version 4,Src: "+ipMap.get("ipSource")+",Dst: "+ipMap.get("ipDestinatin"),ipMap);
 
-            if (map.get("ipProtocol").equals("6")){//TCP
+            if (ipMap.get("ipProtocol").equals("6")){//TCP
 
                 Map<String,String> tcpMap = new HashMap<>();
 
@@ -230,7 +230,7 @@ public class PacketFactory {
 
                 map.put("Transmission Control Protocol,Src Port: "+tcpMap.get("tcpSourcePort")+" Dst Port: "+tcpMap.get("tcpDestinationPort"),tcpMap);
 
-            }else if (map.get("ipProtocol").equals("1")){//icmp
+            }else if (ipMap.get("ipProtocol").equals("1")){//icmp
                 Map<String,String> icmpMap = new HashMap<>();
                 byte[] icmpHead = Arrays.copyOfRange(packet.header,34,42);
                 icmpMap.put("icmpType",String.valueOf(bytes2Int(Arrays.copyOfRange(icmpHead,0,1))));
@@ -240,7 +240,7 @@ public class PacketFactory {
 
                 map.put("Internet Control Message Protocol",icmpMap);
 
-            }else if (map.get("ipProtocol").equals("17")){//udp
+            }else if (ipMap.get("ipProtocol").equals("17")){//udp
                 Map<String,String> udpMap = new HashMap<>();
                 byte[] udpHead = Arrays.copyOfRange(packet.header,34,42);
                 udpMap.put("udpSourcePort",String.valueOf(bytes2Int(Arrays.copyOfRange(udpHead,0,2))));
