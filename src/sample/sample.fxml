@@ -32,7 +32,7 @@
                                  <children>
                                     <Label text="选择网卡" />
                                     <ComboBox fx:id="selectNetworkCard" prefWidth="150.0" />
-                                    <Button mnemonicParsing="false" text="开始" fx:id="start_stop" />
+                                    <Button fx:id="start_stop" mnemonicParsing="false" text="开始" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
@@ -69,6 +69,7 @@
                               </TableView>
                            </children>
                         </HBox>
+                        <VBox fx:id="box" prefHeight="200.0" prefWidth="100.0" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

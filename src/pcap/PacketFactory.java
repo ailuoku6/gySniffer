@@ -4,20 +4,23 @@ import entity.PacketInfo;
 import jpcap.packet.*;
 
 import javax.xml.bind.DatatypeConverter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PacketFactory {
     public static PacketInfo packet2Info(Packet packet,Integer no){
+        System.out.println(DatatypeConverter.printHexBinary(packet.data));
         PacketInfo info = null;
         if (packet.getClass().equals(ICMPPacket.class)){
             info = ICMPanalyze(packet);
-        }else if (packet.getClass().equals(IPPacket.class)){
-            info = IPanalyze(packet);
         }else if (packet.getClass().equals(TCPPacket.class)){
             info = TCPanalyze(packet);
         }else if (packet.getClass().equals(UDPPacket.class)){
             info = UDPanalyze(packet);
         }else if (packet.getClass().equals(ARPPacket.class)){
             info = ARPanalyze(packet);
+        }else if (packet.getClass().equals(IPPacket.class)){
+            info = IPanalyze(packet);
         }
         if (info!=null) info.setNo(no);
         return info==null?new PacketInfo():info;
@@ -116,6 +119,27 @@ public class PacketFactory {
             info.setPacket(packet);
         }
         return info;
+    }
+
+    public static Map<String,Object> getPacketDetail(Packet packet){
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("time",String.valueOf(packet.sec));
+        map.put("dataLength",String.valueOf(packet.header.length));
+
+        if (packet instanceof ICMPPacket){
+
+        }else if (packet instanceof TCPPacket){
+
+        }else if (packet instanceof UDPPacket){
+
+        }else if (packet instanceof ARPPacket){
+
+        }else if (packet instanceof IPPacket){
+
+        }
+
+        return map;
     }
 
 }

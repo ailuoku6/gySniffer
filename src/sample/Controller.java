@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import jpcap.NetworkInterface;
 import jpcap.packet.Packet;
@@ -66,6 +67,9 @@ public class Controller implements Initializable {
     private TableColumn<PacketInfo,Integer> length_col = new TableColumn<>();
     @FXML
     private TableColumn<PacketInfo,String> info_col = new TableColumn<>();
+
+    @FXML
+    private VBox box;
 
 
     public static ObservableList<PacketInfo> packets = FXCollections.observableArrayList();
