@@ -150,10 +150,10 @@ public class PacketFactory {
         map.put("dataLength",String.valueOf(packet.header.length));
 
         byte[] etherHead = Arrays.copyOf(packet.header,14);
-        map.put("macTarget",bytes2Mac(Arrays.copyOfRange(etherHead,0,5)));
-        map.put("macSocrce",bytes2Mac(Arrays.copyOfRange(etherHead,6,11)));
-        byte[] etherprotocol = Arrays.copyOfRange(etherHead,12,13);
-        map.put("etherProtocol",new String(etherprotocol));
+        map.put("macTarget",bytes2Mac(Arrays.copyOfRange(etherHead,0,6)));
+        map.put("macSocrce",bytes2Mac(Arrays.copyOfRange(etherHead,6,12)));
+        byte[] etherprotocol = Arrays.copyOfRange(etherHead,12,14);
+        map.put("etherProtocol",bytes2Str(etherprotocol));
 
 
         if (etherprotocol[0]==0x08&&etherprotocol[1]==0x00){
