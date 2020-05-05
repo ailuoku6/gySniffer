@@ -158,7 +158,24 @@ public class Controller implements Initializable {
                         frameRoot.getChildren().add(interfaceName);
                         box.getChildren().add(new TreeView<String>(frameRoot));
 
+                        for (String key : m.keySet()){
+                            TreeItem<String> croot = null;
+                            Object value = m.get(key);
+                            if (value instanceof Map){
+                                croot = new TreeItem<>(key);
+                                Map<String,String> m1 = (Map<String,String>) value;
+                                for (String key1 : m1.keySet()){
+                                    TreeItem<String> treeItem = new TreeItem<>(key1+": "+m1.get(key1));
+                                    croot.getChildren().add(treeItem);
+                                }
+                            }else if (value.getClass().equals(String.class)){
+                                croot = new TreeItem<>(key+": "+value);
+                            }
+                            if (croot!=null){
+                                box.getChildren().add(new TreeView<String>(croot));
+                            }
 
+                        }
 
                     }
                 }
