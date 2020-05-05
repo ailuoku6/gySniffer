@@ -180,6 +180,7 @@ public class Controller implements Initializable {
                             }
 
                         }
+                        rootnode.setExpanded(true);
                         box.getChildren().add(new TreeView<String>(rootnode));
 
                     }
