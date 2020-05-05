@@ -155,7 +155,7 @@ public class Controller implements Initializable {
                         TreeItem<String> rootnode = new TreeItem<>();
 
                         box.getChildren().clear();
-                        TreeItem<String> frameRoot = new TreeItem<>("frame "+index+" : "+p.header.length +" bytes on wire");
+                        TreeItem<String> frameRoot = new TreeItem<>("frame "+(index+1)+" : "+p.header.length +" bytes on wire");
                         TreeItem<String> interfaceName = new TreeItem<>("Interface Name :"+info.getInterfaceName());
                         frameRoot.getChildren().add(interfaceName);
                         //box.getChildren().add(new TreeView<String>(frameRoot));
