@@ -143,6 +143,15 @@ public class PacketFactory {
         return stringBuilder.toString();
     }
 
+    public static int bytes2Int(byte[] src) {
+        int value;
+        value = (int) ((src[0] & 0xFF)
+                | ((src[1] & 0xFF)<<8)
+                | ((src[2] & 0xFF)<<16)
+                | ((src[3] & 0xFF)<<24));
+        return value;
+    }
+
     public static Map<String,Object> getPacketDetail(Packet packet){
         Map<String,Object> map = new HashMap<>();
 
@@ -153,12 +162,28 @@ public class PacketFactory {
         map.put("macTarget",bytes2Mac(Arrays.copyOfRange(etherHead,0,6)));
         map.put("macSocrce",bytes2Mac(Arrays.copyOfRange(etherHead,6,12)));
         byte[] etherprotocol = Arrays.copyOfRange(etherHead,12,14);
-        map.put("etherProtocol",bytes2Str(etherprotocol));
+        map.put("etherProtocol","0x"+bytes2Str(etherprotocol));
 
 
         if (etherprotocol[0]==0x08&&etherprotocol[1]==0x00){
             int ipHeadlen = 20;
-            byte[] ipHead = Arrays.copyOfRange(packet.header,14,14+ipHeadlen-1);
+            byte[] ipHead = Arrays.copyOfRange(packet.header,14,14+ipHeadlen);
+            byte i1 = ipHead[0];
+            map.put("ipVersion",String.valueOf(i1>>4));
+            map.put("ipHeadLen",String.valueOf((i1&0xF)*4));
+            map.put("ipServiceType","0x"+String.format("%02x",ipHead[1]));
+
+            map.put("ipTotalLen",String.valueOf(bytes2Int(Arrays.copyOfRange(ipHead,2,4))));
+            map.put("Identification","0x"+bytes2Str(Arrays.copyOfRange(ipHead,4,6)));
+            map.put("ipFlags","0x"+bytes2Str(Arrays.copyOfRange(ipHead,6,8)));
+            byte i6 = ipHead[6];
+            i6&=0x1F;
+            byte[] offset = {i6,ipHead[7]};
+            map.put("ipOffset",String.valueOf(bytes2Int(offset)));
+            map.put("ipTTL",String.valueOf(bytes2Int(Arrays.copyOfRange(ipHead,8,9))));
+            map.put("ipProtocol",String.valueOf(bytes2Int(Arrays.copyOfRange(ipHead,9,10))));
+            map.put("ipHeaderCheckSum","0x"+bytes2Str(Arrays.copyOfRange(ipHead,10,12)));
+            
 
         }
 
