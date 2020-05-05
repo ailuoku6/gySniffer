@@ -23,8 +23,10 @@ import jpcap.NetworkInterface;
 import jpcap.packet.Packet;
 import pcap.NetCard;
 import pcap.PacketCapture;
+import pcap.PacketFactory;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -140,7 +142,13 @@ public class Controller implements Initializable {
 //                        choosedStream = TableRowControl.this.getItem();//获取点击的对象
 //                        choosedIndex=TableRowControl.this.getIndex();//获取点击的index，就是表上的第几项
 
-                        System.out.println(TableRowControl.this.getIndex());
+                        //System.out.println(TableRowControl.this.getIndex());
+                        Packet p = packetTable.getItems().get(TableRowControl.this.getIndex()).getPacket();
+
+                        Map<String,Object> m =  PacketFactory.getPacketDetail(p);
+                        for(String key : m.keySet()){
+                            System.out.println(m.get(key));
+                        }
 
                     }
                 }

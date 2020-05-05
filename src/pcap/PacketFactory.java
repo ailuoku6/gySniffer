@@ -4,6 +4,8 @@ import entity.PacketInfo;
 import jpcap.packet.*;
 
 import javax.xml.bind.DatatypeConverter;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -121,21 +123,42 @@ public class PacketFactory {
         return info;
     }
 
+    public static String bytes2Mac(byte[] bytes){
+        StringBuilder stringBuilder = new StringBuilder();
+        int len = bytes.length;
+        for (int i = 0; i < len; i++) {
+            stringBuilder.append(bytes[i]);
+            if (i!=len-1) stringBuilder.append(":");
+        }
+        return stringBuilder.toString();
+    }
+
+    public static String bytes2Str(byte[] bytes){
+        StringBuilder stringBuilder = new StringBuilder();
+        int len = bytes.length;
+        for (byte b:
+             bytes) {
+            stringBuilder.append(b);
+        }
+        return stringBuilder.toString();
+    }
+
     public static Map<String,Object> getPacketDetail(Packet packet){
         Map<String,Object> map = new HashMap<>();
 
         map.put("time",String.valueOf(packet.sec));
         map.put("dataLength",String.valueOf(packet.header.length));
 
-        if (packet instanceof ICMPPacket){
+        byte[] etherHead = Arrays.copyOf(packet.header,14);
+        map.put("macTarget",bytes2Mac(Arrays.copyOfRange(etherHead,0,5)));
+        map.put("macSocrce",bytes2Mac(Arrays.copyOfRange(etherHead,6,11)));
+        byte[] etherprotocol = Arrays.copyOfRange(etherHead,12,13);
+        map.put("etherProtocol",new String(etherprotocol));
 
-        }else if (packet instanceof TCPPacket){
 
-        }else if (packet instanceof UDPPacket){
-
-        }else if (packet instanceof ARPPacket){
-
-        }else if (packet instanceof IPPacket){
+        if (etherprotocol[0]==0x08&&etherprotocol[1]==0x00){
+            int ipHeadlen = 20;
+            byte[] ipHead = Arrays.copyOfRange(packet.header,14,14+ipHeadlen-1);
 
         }
 
