@@ -152,11 +152,14 @@ public class Controller implements Initializable {
                             System.out.println(m.get(key));
                         }
 
+                        TreeItem<String> rootnode = new TreeItem<>();
+
                         box.getChildren().clear();
                         TreeItem<String> frameRoot = new TreeItem<>("frame "+index+" : "+p.header.length +" bytes on wire");
                         TreeItem<String> interfaceName = new TreeItem<>("Interface Name :"+info.getInterfaceName());
                         frameRoot.getChildren().add(interfaceName);
-                        box.getChildren().add(new TreeView<String>(frameRoot));
+                        //box.getChildren().add(new TreeView<String>(frameRoot));
+                        rootnode.getChildren().add(frameRoot);
 
                         for (String key : m.keySet()){
                             TreeItem<String> croot = null;
@@ -172,10 +175,12 @@ public class Controller implements Initializable {
                                 croot = new TreeItem<>(key+": "+value);
                             }
                             if (croot!=null){
-                                box.getChildren().add(new TreeView<String>(croot));
+                                //box.getChildren().add(new TreeView<String>(croot));
+                                rootnode.getChildren().add(croot);
                             }
 
                         }
+                        box.getChildren().add(new TreeView<String>(rootnode));
 
                     }
                 }
