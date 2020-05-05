@@ -127,7 +127,7 @@ public class PacketFactory {
         StringBuilder stringBuilder = new StringBuilder();
         int len = bytes.length;
         for (int i = 0; i < len; i++) {
-            stringBuilder.append(bytes[i]);
+            stringBuilder.append(String.format("%02x", bytes[i]));
             if (i!=len-1) stringBuilder.append(":");
         }
         return stringBuilder.toString();
@@ -138,7 +138,7 @@ public class PacketFactory {
         int len = bytes.length;
         for (byte b:
              bytes) {
-            stringBuilder.append(b);
+            stringBuilder.append(String.format("%02x", b));
         }
         return stringBuilder.toString();
     }
