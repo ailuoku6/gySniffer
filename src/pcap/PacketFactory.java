@@ -143,13 +143,25 @@ public class PacketFactory {
         return stringBuilder.toString();
     }
 
-    public static int bytes2Int(byte[] src) {
-        int value;
-        value = (int) ((src[0] & 0xFF)
-                | ((src[1] & 0xFF)<<8)
-                | ((src[2] & 0xFF)<<16)
-                | ((src[3] & 0xFF)<<24));
+    public static int bytes2Int(byte[] b) {
+        int value= 0;
+        for(int i=0;i<b.length;i++){
+            int n=(b[i]<0?(int)b[i]+256:(int)b[i])<<(8*i);
+            value+=n;
+        }
         return value;
+    }
+
+    public static String bytes2Ip(byte[] bytes){
+        StringBuilder stringBuilder = new StringBuilder();
+        int len = bytes.length;
+
+        for (int i = 0;i<len;i++){
+            byte[] bs = {bytes[i]};
+            stringBuilder.append(bytes2Int(bs)+(i==len-1?"":"."));
+        }
+
+        return stringBuilder.toString();
     }
 
     public static Map<String,Object> getPacketDetail(Packet packet){
@@ -183,7 +195,42 @@ public class PacketFactory {
             map.put("ipTTL",String.valueOf(bytes2Int(Arrays.copyOfRange(ipHead,8,9))));
             map.put("ipProtocol",String.valueOf(bytes2Int(Arrays.copyOfRange(ipHead,9,10))));
             map.put("ipHeaderCheckSum","0x"+bytes2Str(Arrays.copyOfRange(ipHead,10,12)));
-            
+
+            map.put("ipSource",bytes2Ip(Arrays.copyOfRange(ipHead,12,16)));
+            map.put("ipDestinatin",bytes2Ip(Arrays.copyOfRange(ipHead,16,20)));
+
+            if (map.get("ipProtocol").equals("6")){//TCP
+                byte[] tcpHead = Arrays.copyOfRange(packet.header,34,54);
+                map.put("tcpSourcePort",bytes2Int(Arrays.copyOfRange(tcpHead,0,2)));
+                map.put("tcpDestinationPort",bytes2Int(Arrays.copyOfRange(tcpHead,2,4)));
+                map.put("tcpSequence",bytes2Int(Arrays.copyOfRange(tcpHead,4,8)));
+                map.put("tcpAck",bytes2Int(Arrays.copyOfRange(tcpHead,8,12)));
+                byte b12 = tcpHead[12];
+                byte[] arrb12 = {(byte) (b12>>4)};
+
+                map.put("tcpHeadLen",bytes2Int(arrb12)*4);
+
+                byte[] arrb13 = {(byte) (b12&0x3f),tcpHead[13]};
+                map.put("tcpFlags","0x"+bytes2Str(arrb13));
+
+                map.put("tcpWindowSize",bytes2Int(Arrays.copyOfRange(tcpHead,14,16)));
+                map.put("tcpCheckSum","0x"+bytes2Str(Arrays.copyOfRange(tcpHead,16,18)));
+                map.put("tcpUrgent",bytes2Int(Arrays.copyOfRange(tcpHead,18,20)));
+
+            }else if (map.get("ipProtocol").equals("1")){//icmp
+                byte[] icmpHead = Arrays.copyOfRange(packet.header,34,42);
+                map.put("icmpType",bytes2Int(Arrays.copyOfRange(icmpHead,0,1)));
+                map.put("icmpCode",bytes2Int(Arrays.copyOfRange(icmpHead,1,2)));
+                map.put("icmpCheckSum","0x"+bytes2Str(Arrays.copyOfRange(icmpHead,2,4)));
+//                map.put("icmpIdenti")
+
+            }else if (map.get("ipProtocol").equals("17")){//udp
+                byte[] udpHead = Arrays.copyOfRange(packet.header,34,42);
+                map.put("udpSourcePort",bytes2Int(Arrays.copyOfRange(udpHead,0,2)));
+                map.put("udpDetinationPort",bytes2Int(Arrays.copyOfRange(udpHead,2,4)));
+                map.put("udpDataLen",bytes2Int(Arrays.copyOfRange(udpHead,4,6)));
+                map.put("udpCheckSum",bytes2Int(Arrays.copyOfRange(udpHead,6,8)));
+            }
 
         }
 
