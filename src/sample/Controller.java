@@ -188,10 +188,8 @@ public class Controller implements Initializable {
                         rootnode.setExpanded(true);
                         box.getChildren().add(new TreeView<String>(rootnode));
 
-                        String display = "e3 a5 09 56\nc5 89 d4 b1";
-
                         detail_text.setVisible(true);
-                        detail_text.setText(display);
+                        detail_text.setText(PacketFactory.getDetail(p));
 
                     }
                 }

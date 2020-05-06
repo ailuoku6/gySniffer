@@ -144,6 +144,10 @@ public class PacketFactory {
         return stringBuilder.toString();
     }
 
+    public static String byte2Str(byte b){
+        return String.format("%02x",b);
+    }
+
     public static int bytes2Int(byte[] b) {
         int value= 0;
         for(int i=0;i<b.length;i++){
@@ -254,6 +258,35 @@ public class PacketFactory {
         }
 
         return map;
+    }
+
+    public static String getDetail(Packet packet){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        byte[] head = packet.header;
+        byte[] data = packet.data;
+
+        int head_len = head.length;
+        int data_len = data.length;
+        int p = 0;
+        stringBuilder.append("Head:\n");
+
+        for (int i = 0;i<head_len;i++){
+            stringBuilder.append(byte2Str(head[i]));
+            p++;
+            if (p==8){
+                stringBuilder.append("  ");
+            }else if (p==16){
+                p = 0;
+                stringBuilder.append("\n");
+            }else stringBuilder.append(" ");
+        }
+
+        stringBuilder.append("\n\nData:\n");
+
+        
+
+        return stringBuilder.toString();
     }
 
 }
