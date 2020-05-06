@@ -155,7 +155,7 @@ public class PacketCapture implements Runnable {
             JpcapCaptor captor = JpcapCaptor.openDevice(device,65535,true,20);
             while (isRun){
                 long startTime = System.currentTimeMillis();
-                while (startTime+600>=System.currentTimeMillis()){
+                while (startTime+500>=System.currentTimeMillis()){
                     packet = captor.getPacket();
                     if (packet!=null){
                         packets.add(packet);
@@ -163,7 +163,7 @@ public class PacketCapture implements Runnable {
                         addItem2Table(packet);
                     }
                 }
-                Thread.sleep(1000);
+                Thread.sleep(600);
             }
         }catch (IOException | InterruptedException e){
             e.printStackTrace();
