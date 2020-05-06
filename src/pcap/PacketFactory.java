@@ -38,8 +38,8 @@ public class PacketFactory {
             IPPacket ipPacket = (IPPacket) packet;
             info.setProtocol("IP");
             info.setTime(String.valueOf(ipPacket.sec));
-            info.setSourceIp(ipPacket.src_ip.toString());
-            info.setTargetIp(ipPacket.dst_ip.toString());
+            info.setSourceIp(ipPacket.src_ip.toString().substring(1));
+            info.setTargetIp(ipPacket.dst_ip.toString().substring(1));
             info.setLength((int) ipPacket.length);
             info.setInfo(ipPacket.toString());
             info.setPacket(packet);
@@ -56,8 +56,8 @@ public class PacketFactory {
             ICMPPacket icmpPacket = (ICMPPacket) packet;
             info.setProtocol("ICMP");
             info.setTime(String.valueOf(icmpPacket.sec));
-            info.setSourceIp(icmpPacket.src_ip.toString());
-            info.setTargetIp(icmpPacket.dst_ip.toString());
+            info.setSourceIp(icmpPacket.src_ip.toString().substring(1));
+            info.setTargetIp(icmpPacket.dst_ip.toString().substring(1));
             info.setLength((int) icmpPacket.length);
             info.setInfo(icmpPacket.toString());
             info.setPacket(packet);
@@ -74,8 +74,8 @@ public class PacketFactory {
             TCPPacket tcpPacket = (TCPPacket) packet;
             info.setProtocol("TCP");
             info.setTime(String.valueOf(tcpPacket.sec));
-            info.setSourceIp(tcpPacket.src_ip.toString());
-            info.setTargetIp(tcpPacket.dst_ip.toString());
+            info.setSourceIp(tcpPacket.src_ip.toString().substring(1));
+            info.setTargetIp(tcpPacket.dst_ip.toString().substring(1));
             info.setLength((int) tcpPacket.length);
             info.setInfo(tcpPacket.toString());
             info.setPacket(packet);
@@ -99,8 +99,8 @@ public class PacketFactory {
             UDPPacket udpPacket = (UDPPacket) packet;
             info.setProtocol("UDP");
             info.setTime(String.valueOf(udpPacket.sec));
-            info.setSourceIp(udpPacket.src_ip.toString());
-            info.setTargetIp(udpPacket.dst_ip.toString());
+            info.setSourceIp(udpPacket.src_ip.toString().substring(1));
+            info.setTargetIp(udpPacket.dst_ip.toString().substring(1));
             info.setLength(udpPacket.length);
             info.setInfo(udpPacket.toString());
             info.setPacket(packet);
