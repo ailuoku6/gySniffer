@@ -22,7 +22,7 @@ public class Main extends Application {
 //        System.out.println(alldevs.size());
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("GY网络嗅探器");
-        primaryStage.setScene(new Scene(root, 1360, 650));
+        primaryStage.setScene(new Scene(root, 1360, 800));
         primaryStage.show();
     }
 
