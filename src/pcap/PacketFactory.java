@@ -2,8 +2,10 @@ package pcap;
 
 import entity.PacketInfo;
 import jpcap.packet.*;
+import utils.UnknownBytes2String;
 
 import javax.xml.bind.DatatypeConverter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -275,16 +277,21 @@ public class PacketFactory {
             stringBuilder.append(byte2Str(head[i]));
             p++;
             if (p==8){
-                stringBuilder.append("  ");
+                stringBuilder.append("    ");
             }else if (p==16){
                 p = 0;
                 stringBuilder.append("\n");
-            }else stringBuilder.append(" ");
+            }else stringBuilder.append("  ");
         }
 
-        stringBuilder.append("\n\nData:\n");
-
-        
+        if (data!=null&&data_len!=0){
+            stringBuilder.append("\n\nData:\n");
+            try {
+                stringBuilder.append(UnknownBytes2String.parse(data));
+            } catch ( UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
 
         return stringBuilder.toString();
     }
