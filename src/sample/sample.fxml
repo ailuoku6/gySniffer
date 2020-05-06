@@ -73,7 +73,8 @@
                                 <VBox fx:id="box" prefHeight="200.0" prefWidth="100.0" />
                                 <VBox prefHeight="200.0" prefWidth="100.0">
                                     <children>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" fx:id="detail_text" />
+<!--                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" fx:id="detail_text" />-->
+                                        <TextArea fx:id="detail_text" editable="false" visible="false"/>
                                     </children>
                                 </VBox>
                             </children>
