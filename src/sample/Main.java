@@ -33,8 +33,9 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
+        super.stop();
         PacketCapture capture = PacketCapture.getInstance();
         capture.setRun(false);
-        super.stop();
+        capture = null;
     }
 }
