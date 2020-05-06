@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -69,7 +70,12 @@
                                         </TableView>
                                     </children>
                                 </HBox>
-                                <VBox prefHeight="200.0" prefWidth="100.0" fx:id="box" />
+                                <VBox fx:id="box" prefHeight="200.0" prefWidth="100.0" />
+                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" fx:id="detail_text" />
+                                    </children>
+                                </VBox>
                             </children>
                             <padding>
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

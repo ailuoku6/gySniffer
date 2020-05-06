@@ -19,6 +19,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 import jpcap.NetworkInterface;
 import jpcap.packet.Packet;
@@ -73,6 +74,9 @@ public class Controller implements Initializable {
 
     @FXML
     private VBox box;
+
+    @FXML
+    private Text detail_text;
 
 
     public static ObservableList<PacketInfo> packets = FXCollections.observableArrayList();
@@ -183,6 +187,10 @@ public class Controller implements Initializable {
                         }
                         rootnode.setExpanded(true);
                         box.getChildren().add(new TreeView<String>(rootnode));
+                        
+                        String display = "e3 a5 09 56\nc5 89 d4 b1";
+
+                        detail_text.setText(display);
 
                     }
                 }
