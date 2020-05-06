@@ -21,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 import jpcap.NetworkInterface;
 import jpcap.packet.Packet;
 import pcap.NetCard;
@@ -239,6 +240,24 @@ public class Controller implements Initializable {
                 scanning.set(false);
                 //如果不是选择空
                 capture.setDevice(newValue);
+            }
+        });
+
+        selectNetworkCard.setConverter(new StringConverter<NetworkInterface>() {
+            @Override
+            public String toString(NetworkInterface object) {
+                return object.name;
+            }
+
+            @Override
+            public NetworkInterface fromString(String string) {
+                int i = 0;
+                for (;i<networkCards.size();i++){
+                    if (networkCards.get(i).name.equals(string)){
+                        return networkCards.get(i);
+                    }
+                }
+                return null;
             }
         });
 
