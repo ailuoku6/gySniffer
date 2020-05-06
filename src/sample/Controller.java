@@ -2,6 +2,7 @@ package sample;
 
 import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import entity.PacketInfo;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableBooleanValue;
@@ -155,7 +156,7 @@ public class Controller implements Initializable {
                         TreeItem<String> rootnode = new TreeItem<>();
 
                         box.getChildren().clear();
-                        TreeItem<String> frameRoot = new TreeItem<>("frame "+index+" : "+p.header.length +" bytes on wire");
+                        TreeItem<String> frameRoot = new TreeItem<>("frame "+(index+1)+" : "+p.header.length +" bytes on wire");
                         TreeItem<String> interfaceName = new TreeItem<>("Interface Name :"+info.getInterfaceName());
                         frameRoot.getChildren().add(interfaceName);
                         //box.getChildren().add(new TreeView<String>(frameRoot));
@@ -180,6 +181,7 @@ public class Controller implements Initializable {
                             }
 
                         }
+                        rootnode.setExpanded(true);
                         box.getChildren().add(new TreeView<String>(rootnode));
 
                     }
@@ -296,5 +298,8 @@ public class Controller implements Initializable {
 
         //bindData2Capture();
     }
+
+
+
 }
 

@@ -11,7 +11,7 @@
 
 <StackPane fx:id="container" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="1132.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
-        <TabPane prefHeight="525.0" prefWidth="1180.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane prefHeight="650.0" prefWidth="1180.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="主界面">
                     <content>

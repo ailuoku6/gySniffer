@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pcap.PacketCapture;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -28,5 +29,12 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        PacketCapture capture = PacketCapture.getInstance();
+        capture.setRun(false);
+        super.stop();
     }
 }
