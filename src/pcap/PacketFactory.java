@@ -28,7 +28,8 @@ public class PacketFactory {
 //            info = ARPanalyze(packet);
 //        }
         if (info!=null) info.setNo(no);
-        return info==null?new PacketInfo():info;
+        //return info==null?new PacketInfo():info;
+        return info;
     }
 
     public static PacketInfo IPanalyze(Packet packet){
