@@ -12,6 +12,8 @@ public class PacketInfo {
     private String info;
     private Packet packet;
     private String interfaceName;
+    private String sourcePort;
+    private String targetPort;
 
     public PacketInfo(Integer no, String time, String sourceIp, String targetIp, String protocol, Integer length, String info,Packet packet) {
         this.no = no;
@@ -107,5 +109,21 @@ public class PacketInfo {
 
     public void setInterfaceName(String interfaceName) {
         this.interfaceName = interfaceName;
+    }
+
+    public String getSourcePort() {
+        return sourcePort;
+    }
+
+    public String getTargetPort() {
+        return targetPort;
+    }
+
+    public void setSourcePort(String sourcePort) {
+        this.sourcePort = sourcePort;
+    }
+
+    public void setTargetPort(String targetPort) {
+        this.targetPort = targetPort;
     }
 }

@@ -131,6 +131,11 @@ public class PacketCapture implements Runnable {
             }else if (Filter.contains("keyword")){
                 String keyword = Filter.substring(8);
                 if (!info.getInfo().contains(keyword)) flag = false;
+            }else if (Filter.contains("port")){
+                String port = Filter.substring(5);
+                String sport = info.getSourcePort();
+                String tport = info.getTargetPort();
+                if (sport==null||tport==null||(!sport.contains(port)&&!tport.contains(port))) flag = false;
             }
             for (String p:protocolList) {
                 if (Filter.contains(p)){

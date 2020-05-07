@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class PacketFactory {
     public static PacketInfo packet2Info(Packet packet,Integer no){
-        System.out.println(DatatypeConverter.printHexBinary(packet.data));
+//        System.out.println(DatatypeConverter.printHexBinary(packet.data));
         PacketInfo info = null;
         if (packet.getClass().equals(ICMPPacket.class)){
             info = ICMPanalyze(packet);
@@ -45,7 +45,7 @@ public class PacketFactory {
             info.setInfo(ipPacket.toString());
             info.setPacket(packet);
 
-            System.out.println(ipPacket.header);
+//            System.out.println(ipPacket.header);
         }
         return info;
     }
@@ -63,7 +63,7 @@ public class PacketFactory {
             info.setInfo(icmpPacket.toString());
             info.setPacket(packet);
 
-            System.out.println(icmpPacket.header);
+//            System.out.println(icmpPacket.header);
         }
         return info;
     }
@@ -81,14 +81,17 @@ public class PacketFactory {
             info.setInfo(tcpPacket.toString());
             info.setPacket(packet);
 
-            System.out.println(tcpPacket.header);
+            info.setSourcePort(String.valueOf(tcpPacket.src_port));
+            info.setTargetPort(String.valueOf(tcpPacket.dst_port));
 
-            System.out.println(tcpPacket.ack);
-            System.out.println(tcpPacket.ack_num);
-            System.out.println(tcpPacket.caplen);
-            System.out.println(tcpPacket.dst_port);
-            System.out.println(tcpPacket.src_port);
-            System.out.println(tcpPacket.toString());
+//            System.out.println(tcpPacket.header);
+//
+//            System.out.println(tcpPacket.ack);
+//            System.out.println(tcpPacket.ack_num);
+//            System.out.println(tcpPacket.caplen);
+//            System.out.println(tcpPacket.dst_port);
+//            System.out.println(tcpPacket.src_port);
+//            System.out.println(tcpPacket.toString());
         }
         return info;
     }
@@ -105,6 +108,9 @@ public class PacketFactory {
             info.setLength(udpPacket.length);
             info.setInfo(udpPacket.toString());
             info.setPacket(packet);
+
+            info.setSourcePort(String.valueOf(udpPacket.src_port));
+            info.setTargetPort(String.valueOf(udpPacket.dst_port));
 
             System.out.println(DatatypeConverter.printHexBinary(udpPacket.header));
         }
