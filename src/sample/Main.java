@@ -7,10 +7,39 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pcap.PacketCapture;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Main extends Application {
+
+    static {
+        try {
+            InputStream in = Main.class.getResourceAsStream("/libs/Jpcap.dll");
+            File ffile = new File("");
+            String filepath = null;
+            filepath = ffile.getAbsolutePath()+File.separator+"Jpcap.dll";
+            File dll = new File(filepath);
+            FileOutputStream out = new FileOutputStream(dll);
+
+            int i;
+            byte[] buf = new byte[1024];
+            try {
+                while ((i = in.read(buf)) != -1) {
+                    out.write(buf, 0, i);
+                }
+            } finally {
+                in.close();
+                out.close();
+            }
+            System.load(dll.getAbsolutePath());//
+            dll.deleteOnExit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception{
